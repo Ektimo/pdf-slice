@@ -20,3 +20,4 @@ package-lock.json
 
 # sensitive stuff
 config.json
+/pdfs
