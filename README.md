@@ -14,14 +14,14 @@
 
 ## Run
 
-Put pdf file into ./pdfs/
+* Put pdf file into `./pdfs/`
+* Create `config.json`. See `config.json.draft` and `config.ts` for definitions. Password is optional (not protected if missing). Mail is optional (uses default `name.surname@domain`)
 
 ### Docker:
 * `docker build -t pdf-slice .`
 * `docker run -it -v "$(pwd)"/pdfs:/app/pdfs pdf-slice node ./built/main.js sample.pdf`
 
 ### Local:
-* create `config.json`
 * `npm run build`
 * manual run: `node ./built/main.js sample.pdf`
 
