@@ -134,7 +134,7 @@ async function slice(pdfFileName: string) {
 
     const reportTable = new Table({
         head: ['message', 'user', 'email', 'pwd', 'attachment'],
-        colWidths: [20, 20, 30, 5, 50],
+        colWidths: [20, 20, 30, 5, 35],
         style: {
             compact: true
         },
