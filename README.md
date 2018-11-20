@@ -1,4 +1,4 @@
-# pdf-slice-by-keyword
+# pdf-slice
 
 ## Functionality:
 * Slice a milti-page PDF by pages into multiple PDFs.
