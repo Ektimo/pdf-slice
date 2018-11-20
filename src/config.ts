@@ -1,6 +1,6 @@
 export interface Employee {
     name: string;
-    pdfPwd: string;
+    pdfPwd: string | undefined;
     email: string | undefined;
 }
 

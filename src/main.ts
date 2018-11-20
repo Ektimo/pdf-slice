@@ -99,17 +99,22 @@ async function slice(pdfFileName: string) {
                     const employee = matches.single().getOrThrow();
     
                     const slicedPageWithUserFilePath = path.join(pdfFolderPath, pdfFileBaseName + '-' + employee.name + '.pdf');
-                    await qpdf.encrypt(slicedPageFilePath,
-                        {
-                            keyLength: 256,
-                            password: employee.pdfPwd,
-                            outputFile: slicedPageWithUserFilePath,
-                            restrictions: {
-                                print: 'full',
-                                useAes: 'y'
-                            }
-                        });
-                    fs.unlinkSync(slicedPageFilePath);
+                    if(employee.pdfPwd !== undefined) {
+                        await qpdf.encrypt(slicedPageFilePath,
+                            {
+                                keyLength: 256,
+                                password: employee.pdfPwd,
+                                outputFile: slicedPageWithUserFilePath,
+                                restrictions: {
+                                    print: 'full',
+                                    useAes: 'y'
+                                }
+                            });
+                        fs.unlinkSync(slicedPageFilePath);
+                    } 
+                    else {
+                        fs.renameSync(slicedPageFilePath, slicedPageWithUserFilePath)
+                    }
 
                     resolve({
                         pendingEmailOrErrorMessage: {
@@ -118,7 +123,8 @@ async function slice(pdfFileName: string) {
                             subject: config.emailSubject,
                             emailContent: config.emailContent,
                             attachmentName: path.basename(slicedPageWithUserFilePath),
-                            attachmentPath: slicedPageWithUserFilePath
+                            attachmentPath: slicedPageWithUserFilePath,
+                            attachmentPwdProtected: employee.pdfPwd !== undefined
                         }
                     });
                 }
@@ -127,8 +133,8 @@ async function slice(pdfFileName: string) {
     ));
 
     const reportTable = new Table({
-        head: ['message', 'user', 'email', 'attachment'],
-        colWidths: [40, 25, 35, 60],
+        head: ['message', 'user', 'email', 'protected', 'attachment'],
+        colWidths: [40, 25, 35, 5, 60],
         style: {
             compact: true
         },
@@ -138,7 +144,11 @@ async function slice(pdfFileName: string) {
     reportTable.push(...processedPages
         .map(x => {
             if(isPendingEmail(x.pendingEmailOrErrorMessage)) {
-                return ['✓' , x.pendingEmailOrErrorMessage.name, x.pendingEmailOrErrorMessage.email, x.pendingEmailOrErrorMessage.attachmentPath];
+                return ['✓' , 
+                    x.pendingEmailOrErrorMessage.name, 
+                    x.pendingEmailOrErrorMessage.email, 
+                    x.pendingEmailOrErrorMessage.attachmentPwdProtected ? '✓' : '', 
+                    x.pendingEmailOrErrorMessage.attachmentPath];
             }
             else {
                 return [x.pendingEmailOrErrorMessage]
@@ -197,6 +207,7 @@ interface PendingEmail {
     emailContent: string;
     attachmentName: string;
     attachmentPath: string;
+    attachmentPwdProtected: boolean;
 }
 
 function isPendingEmail(item: PendingEmail | string): item is PendingEmail {
