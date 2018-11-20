@@ -1,6 +1,6 @@
 import {DateTime} from 'luxon';
 import logger from "./logger";
-import {Config, Employee} from "./config";
+import {Config, Slice} from "./config";
 import {Vector} from "prelude-ts";
 import {Report} from "./report";
 import os = require('os');
@@ -69,7 +69,7 @@ async function slice(pdfFileName: string) {
         })
     );
     
-    const employees = Vector.ofIterable(config.employees);
+    const slices = Vector.ofIterable(config.slices);
     // const  = Vector.empty<PendingEmail>();
 
     // inspect each of sliced pdfs for keyword
@@ -81,7 +81,7 @@ async function slice(pdfFileName: string) {
                 const contents = await collectContents(slicedPageFilePath);
                 // logger.info(contents);
                 
-                const matches = employees.filter(x => contents.includes(x.name));
+                const matches = slices.filter(x => contents.includes(x.keyword));
     
                 if(matches.isEmpty()) {
                     const msg = "ERROR: no matching user for file " + slicedPageFilePath;
@@ -96,14 +96,14 @@ async function slice(pdfFileName: string) {
                     reject(msg)
                 }
                 else {
-                    const employee = matches.single().getOrThrow();
+                    const slice = matches.single().getOrThrow();
     
-                    const slicedPageWithUserFilePath = path.join(pdfFolderPath, pdfFileBaseName + '-' + employee.name + '.pdf');
-                    if(employee.pdfPwd !== undefined) {
+                    const slicedPageWithUserFilePath = path.join(pdfFolderPath, pdfFileBaseName + '-' + slice.keyword + '.pdf');
+                    if(slice.pdfPwd !== undefined) {
                         await qpdf.encrypt(slicedPageFilePath,
                             {
                                 keyLength: 256,
-                                password: employee.pdfPwd,
+                                password: slice.pdfPwd,
                                 outputFile: slicedPageWithUserFilePath,
                                 restrictions: {
                                     print: 'full',
@@ -118,13 +118,13 @@ async function slice(pdfFileName: string) {
 
                     resolve({
                         pendingEmailOrErrorMessage: {
-                            name: employee.name,
-                            email: employee.email || `${employee.name.replace(' ', '.')}@${config.emailDomain}`,
+                            name: slice.keyword,
+                            email: slice.email || `${slice.keyword.replace(' ', '.')}@${config.emailDomain}`,
                             subject: config.emailSubject,
                             emailContent: config.emailContent,
                             attachmentName: path.basename(slicedPageWithUserFilePath),
                             attachmentPath: slicedPageWithUserFilePath,
-                            attachmentPwdProtected: employee.pdfPwd !== undefined
+                            attachmentPwdProtected: slice.pdfPwd !== undefined
                         }
                     });
                 }
@@ -133,8 +133,8 @@ async function slice(pdfFileName: string) {
     ));
 
     const reportTable = new Table({
-        head: ['message', 'user', 'email', 'protected', 'attachment'],
-        colWidths: [40, 25, 35, 5, 60],
+        head: ['message', 'user', 'email', 'pwd', 'attachment'],
+        colWidths: [20, 20, 30, 5, 60],
         style: {
             compact: true
         },

@@ -7,13 +7,13 @@
     "smtpPassword": "somepwd",
     "smtpUsername": "username@xxxxx.xxx",
     "smtpSender": "username@xxxxx.xxx",
-    "employees": [
+    "slices": [
         {
-            "name": "A Simple PDF File ",
+            "keyword": "A Simple PDF File ",
             "pdfPwd": "pwd1"
         },
         {
-            "name": "Simple PDF File 2",
+            "keyword": "Simple PDF File 2",
             "pdfPwd": "pwd2"
         },
     ]

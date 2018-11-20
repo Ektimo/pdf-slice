@@ -1,5 +1,5 @@
-export interface Employee {
-    name: string;
+export interface Slice {
+    keyword: string;
     pdfPwd: string | undefined;
     email: string | undefined;
 }
@@ -13,5 +13,5 @@ export interface Config {
     smtpPassword: string;
     smtpUsername: string;
     smtpSender: string; // e.g. '"Name Surname" <name.surname@example.com>'
-    employees: Employee[];
+    slices: Slice[];
 }
