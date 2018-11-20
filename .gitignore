@@ -1,0 +1,22 @@
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Intellij ide
+.idea
+
+# compiled TS target dir
+/built
+
+# sensitive stuff
+config.json

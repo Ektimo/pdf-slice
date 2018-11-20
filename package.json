@@ -1,0 +1,35 @@
+{
+  "name": "pdf-slice-by-keyword",
+  "version": "0.1.0",
+  "description": "Slice PDF by keyword and optionally mail it password protected",
+  "main": "./build/main.js",
+  "author": "Ektimo",
+  "scripts": {
+    "build": "tsc",
+    "buildNoChecks": "tsc --noStrictGenericChecks --skipLibCheck"
+  },
+  "dependencies": {
+    "bottleneck": "2.7.2",
+    "cli-table2": "0.2.0",
+    "luxon": "1.3.3",
+    "mkdirp": "0.5.1",
+    "node-gyp": "^3.8.0",
+    "node-qpdf": "1.0.3",
+    "nodemailer": "4.6.7",
+    "pdf2json": "1.1.7",
+    "prelude-ts": "0.8.2",
+    "scissors": "0.2.5",
+    "winston": "3.0.0",
+    "winston-daily-rotate-file": "3.3.0"
+  },
+  "devDependencies": {
+    "@types/cli-table2": "0.2.1",
+    "@types/core-js": "2.5.0",
+    "@types/cron": "1.3.0",
+    "@types/luxon": "1.2.2",
+    "@types/mkdirp": "0.5.2",
+    "@types/node": "10.5.7",
+    "@types/nodemailer": "4.6.2",
+    "typescript": "3.1.6"
+  }
+}

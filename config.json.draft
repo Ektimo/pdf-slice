@@ -1,0 +1,20 @@
+{
+    "adminNotificationsEmail": "xxxxxxxxxxxx@xxxxxx.xxx, yyyyyyyyyy@xxxxxx.xxx",
+    "emailDomain": "example.com"
+    "emailSubject": "Sliced pdf",
+    "emailContent": "",
+    "smtpServer": "xxxxx.xxxxx.xxx",
+    "smtpPassword": "somepwd",
+    "smtpUsername": "username@xxxxx.xxx",
+    "smtpSender": "username@xxxxx.xxx",
+    "employees": [
+        {
+            "name": "A Simple PDF File ",
+            "pdfPwd": "pwd1"
+        },
+        {
+            "name": "Simple PDF File 2",
+            "pdfPwd": "pwd2"
+        },
+    ]
+}
