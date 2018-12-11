@@ -1,6 +1,6 @@
 {
     "adminNotificationsEmail": "xxxxxxxxxxxx@xxxxxx.xxx, yyyyyyyyyy@xxxxxx.xxx",
-    "emailDomain": "example.com"
+    "emailDomain": "example.com",
     "emailSubject": "Sliced pdf",
     "emailContent": "",
     "smtpServer": "xxxxx.xxxxx.xxx",
@@ -10,11 +10,11 @@
     "slices": [
         {
             "keyword": "A Simple PDF File ",
-            "pdfPwd": "pwd1"
+            "pdfPwd": "pwd1",
+            "email": "recepient1@example.com"
         },
         {
-            "keyword": "Simple PDF File 2",
-            "pdfPwd": "pwd2"
-        },
+            "keyword": "Simple PDF File 2"
+        }
     ]
 }

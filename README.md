@@ -5,6 +5,10 @@
 * Inspect all PDFs and find keyword matches for configuration.
 * (optionally) password protect and mail PDFs to given mail addresses
 
+## Example:
+
+![example](./example.png "Example")
+
 ## Environment/prerequisites:
 * `Docker` OR 
 * Local environment with:
